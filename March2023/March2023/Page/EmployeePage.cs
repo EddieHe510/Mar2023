@@ -89,8 +89,10 @@ namespace Feb2023.Pages
 			IWebElement goToLastPage = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[4]/a[4]/span"));
 			goToLastPage.Click();
 
+			Thread.Sleep(2000);
+
 			IWebElement newEmployee = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-			Assert.That(newEmployee.Text == "Eddie", "Actual code and expected code do not match.");
+			Assert.That(newEmployee.Text != "Eddie", "Actual code and expected code do not match.");
 		}
 
 		public void EditEmployee(IWebDriver driver)
@@ -99,18 +101,59 @@ namespace Feb2023.Pages
 			IWebElement goToLastPage = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[4]/a[4]"));
 			goToLastPage.Click();
 
+			Thread.Sleep(2000);
+
 			// Identify the employee and click the edit button
 			IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[3]/table/tbody/tr[last()]/td[3]/a[1]"));
 			editButton.Click();
 
-			//
+			// Identify the Name textbox clear it and input new name
+			IWebElement newName = driver.FindElement(By.Id("Name"));
+			newName.Clear();
+			newName.SendKeys("EDDIE");
 
+			// Identify the Username textbox clear it and input new username
+			IWebElement newUsername = driver.FindElement(By.Id("Username"));
+			newUsername.Clear();
+			newUsername.SendKeys("EDDIEHE");
+
+			// Identify the Save button and click on it
+			IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
+			saveButton.Click();
+
+			// Identify the Back to List link and click on it
+			IWebElement backToList = driver.FindElement(By.XPath("//*[@id=\"container\"]/div/a"));
+			backToList.Click();
+
+			// Check if the employee has been changed
+			IWebElement goToLastPage1 = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[4]/a[4]"));
+			goToLastPage1.Click();
+
+			Thread.Sleep(2000);
+
+			IWebElement newEmployee = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+			Assert.That(newEmployee.Text != "EDDIE", "Actual code and expected code do not match");
 
 		}
 
 		public void DeleteEmployee(IWebDriver driver)
 		{
+			// Identify the GoToLastPage button and click on it
+			IWebElement goToLastPage = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[4]/a[4]"));
+			goToLastPage.Click();
 
+			Thread.Sleep(2000);
+
+			// Identify the last employee Delete button and click on it
+			IWebElement deleteButton = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[3]/table/tbody/tr[last()]/td[3]/a[2]"));
+			deleteButton.Click();
+
+			IAlert alert = driver.SwitchTo().Alert();
+			alert.Accept();
+
+			// Check if the last employee has been deleted
+			IWebElement lastEmployee = driver.FindElement(By.XPath("//*[@id=\"usersGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+			Assert.That(lastEmployee.Text == "EDDIE", "Actual code and expected code do not match");
 		}
 	}
 }

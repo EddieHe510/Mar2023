@@ -17,21 +17,21 @@ namespace March2023.Test
 		EmployeePage empObj = new EmployeePage();
 		HomePage homePageObj = new HomePage();
 
-		[Test]
+		[Test, Order(1)]
 		public void CreateEmployeeTest()
 		{
 			homePageObj.GoToEmployeePage(driver);
 			empObj.CreateEmployee(driver);
 		}
 
-		[Test]
+		[Test, Order(2)]
 		public void EditEmployeeTest()
 		{
 			homePageObj.GoToEmployeePage(driver);
 			empObj.EditEmployee(driver);
 		}
 
-		[Test]
+		[Test, Order(3)]
 		public void DeleteEmployeeTest()
 		{
 			homePageObj.GoToEmployeePage(driver);
