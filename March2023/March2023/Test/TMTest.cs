@@ -28,7 +28,7 @@ namespace March2023.Test
 		public void Edit()
 		{
 			homeObj.GoToTMPage(driver);
-			tMObj.Edit(driver);
+			// tMObj.Edit(driver);
 		}
 
 		[Test, Order(3)]

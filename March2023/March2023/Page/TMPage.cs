@@ -30,21 +30,51 @@ namespace March2023.Page
 
 			// Identify the Code TextBox and input code
 			IWebElement codeTextBox = driver.FindElement(By.Id("Code"));
-			codeTextBox.SendKeys("March2023");
+			codeTextBox.SendKeys("February2023");
 
 			// Identify the Description textbox and input description
 			IWebElement descriptionTextBox = driver.FindElement(By.Id("Description"));
-			descriptionTextBox.SendKeys("EDDIE-MARCH2023");
+			descriptionTextBox.SendKeys("Feb23");
 
 			// Identify the Price TextBox and input price
 			IWebElement priceTextBox = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
-			priceTextBox.SendKeys("309");
+			priceTextBox.SendKeys("12");
 
 			// Identify the Save button and click on it
 			IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
+			saveButton.Click();
+			Thread.Sleep(2000);
+
+
+			// Check if new Time record has been created
+			IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+			goToLastPageButton.Click();
+			Thread.Sleep(5000);
 		}
 
-		public void Edit(IWebDriver driver)
+
+		public string GetCode(IWebDriver driver)
+		{
+			IWebElement acutalCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+			return acutalCode.Text;
+		}
+
+		public string GetDescription(IWebDriver driver) 
+		{
+			IWebElement acutalDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+			return acutalDescription.Text;
+		}
+
+		public string GetPrice(IWebDriver driver) 
+		{
+			IWebElement acutalPrice = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
+			return acutalPrice.Text;
+		}
+
+
+
+
+		public void Edit(IWebDriver driver, string description)
 		{
 			// Identify the gotolast page button and click on it
 			IWebElement goToLastPage = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
@@ -61,6 +91,12 @@ namespace March2023.Page
 			codeTextBox.Clear();
 			codeTextBox.SendKeys("Eddie-March2023");
 
+			// edit description textbox
+			IWebElement editDescriptionTextBox = driver.FindElement(By.Id("Description"));
+			editDescriptionTextBox.Clear();
+			editDescriptionTextBox.SendKeys(description);
+			Thread.Sleep(1500);
+
 			// Identify the save button and click on it
 			IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
 			saveButton.Click();
@@ -72,9 +108,18 @@ namespace March2023.Page
 			IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
 			goToLastPageButton.Click();
 
-			IWebElement newRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-			Assert.That(newRecord.Text != "Eddie-March2023", "The new record hasn't been changed");
+			//IWebElement newRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+			//Assert.That(newRecord.Text != "Eddie-March2023", "The new record hasn't been changed");
 		}
+
+		public string GetEditedDescription(IWebDriver driver)
+		{
+			IWebElement createdDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+			return createdDescription.Text;
+		}
+
+
+
 
 		public void Delete(IWebDriver driver)
 		{
