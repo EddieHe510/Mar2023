@@ -50,17 +50,34 @@ namespace March2023.StepDefinitions
             Assert.That(newPrice == "12", "Actual code and expected code do not match.");
         }
 
-		[When(@"I update '([^']*)' on an existing time and material record")]
-		public void WhenIUpdateOnAnExistingTimeAndMaterialRecord(string description)
+		// [When(@"I update '([^']*)' on an existing time and material record")]
+		// public void WhenIUpdateOnAnExistingTimeAndMaterialRecord(string description)
+		//{
+       //     tMObj.Edit(driver, description);
+		//}
+
+		//[Then(@"The record should have the updated '([^']*)'")]
+		//public void ThenTheRecordShouldHaveTheUpdated(string description)
+		//{
+		//	throw new PendingStepException();
+		//}
+
+		[When(@"I update '([^']*)', '([^']*)', '([^']*)' on an existing time and material record")]
+		public void WhenIUpdateOnAnExistingTimeAndMaterialRecord(string description, string code, string price)
 		{
-            tMObj.Edit(driver, description);
+			tMObj.Edit(driver, description, code, price);
 		}
 
-		[Then(@"The record should have the updated '([^']*)'")]
-		public void ThenTheRecordShouldHaveTheUpdated(string description)
+		[Then(@"The record should have the updated '([^']*)', '([^']*)', '([^']*)'")]
+		public void ThenTheRecordShouldHaveTheUpdated(string description, string code, string price)
 		{
-			throw new PendingStepException();
-		}
+			string editedDescription = tMObj.GetEditedDescription(driver);
+			string editedCode = tMObj.GetEditedCode(driver);
+			string editedPrice = tMObj.GetEditedPrice(driver);
 
+			Assert.That(editedDescription == description, "Actual code and expected code do not match.");
+			Assert.That(editedCode == code, "Actual code and expected code do not match.");
+			Assert.That(editedPrice == price, "Actual code and expected code do not match.");
+		}
 	}
 }

@@ -74,7 +74,7 @@ namespace March2023.Page
 
 
 
-		public void Edit(IWebDriver driver, string description)
+		public void Edit(IWebDriver driver, string description, string code, string price)
 		{
 			// Identify the gotolast page button and click on it
 			IWebElement goToLastPage = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
@@ -89,13 +89,18 @@ namespace March2023.Page
 			// Identify the Code TextBox clean it and input new code
 			IWebElement codeTextBox = driver.FindElement(By.Id("Code"));
 			codeTextBox.Clear();
-			codeTextBox.SendKeys("Eddie-March2023");
+			codeTextBox.SendKeys(code);
 
 			// edit description textbox
 			IWebElement editDescriptionTextBox = driver.FindElement(By.Id("Description"));
 			editDescriptionTextBox.Clear();
 			editDescriptionTextBox.SendKeys(description);
 			Thread.Sleep(1500);
+
+			// Identify the Price TextBox clean it and input new code
+			IWebElement priceTextBox = driver.FindElement(By.XPath("//input[@id='Price']"));
+			priceTextBox.Clear();
+			priceTextBox.SendKeys(price);
 
 			// Identify the save button and click on it
 			IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
@@ -117,8 +122,17 @@ namespace March2023.Page
 			IWebElement createdDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
 			return createdDescription.Text;
 		}
+		public string GetEditedCode(IWebDriver driver)
+		{
+			IWebElement acutalCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+			return acutalCode.Text;
+		}
 
-
+		public string GetEditedPrice(IWebDriver driver)
+		{
+			IWebElement acutalPrice = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
+			return acutalPrice.Text;
+		}
 
 
 		public void Delete(IWebDriver driver)
@@ -137,6 +151,11 @@ namespace March2023.Page
 			IAlert deleteAlert = driver.SwitchTo().Alert();
 			deleteAlert.Accept();
 
+		}
+
+		internal void Edit(IWebDriver driver, string description)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
